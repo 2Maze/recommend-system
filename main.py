@@ -2,7 +2,6 @@ import sys
 import numpy as np
 import typing
 
-
 def cosine_similarity(news_vector, user_vector):
     """
     Функция вычисляет косинус угла между векторами,
