@@ -15,7 +15,7 @@ def cosine_similarity(news_vector, user_vector):
     u_v = np.array(user_vector, dtype=int)
     return np.dot(n_v, u_v) / (np.linalg.norm(n_v) * np.linalg.norm(u_v))
 
-def sorting_news(News_dict, user_vector):
+def sorting_news(news_dict, user_vector):
     """
     Функция сортирует новости учитывая интересы пользователя
     :param News_dict: Словарь новостей
@@ -24,8 +24,8 @@ def sorting_news(News_dict, user_vector):
     """
     metrics_dict = dict()
 
-    for id_news in News_dict:
-        metrics_dict[id_news] = cosine_similarity(News_dict[id_news], user_vector)
+    for id_news in news_dict:
+        metrics_dict[id_news] = cosine_similarity(news_dict[id_news], user_vector)
 
     sorted_values = sorted(metrics_dict.values(), reverse=True)
     sorted_dict = {}
