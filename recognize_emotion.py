@@ -1,9 +1,14 @@
 import numpy as np
 import cv2
-import tensorflow as tf
+
+from tensorflow.keras.models import load_model
 
 detector = cv2.CascadeClassifier("haarcascade/haarcascade_frontalface_alt2.xml")
-
+mood_vectors = {"0": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                "1": [1, 1, 0, 0, 0, 1, 1, 0, 1, 0],
+                "2": [1, 0, 1, 1, 1, 0, 1, 1, 1, 1],
+                "3": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+                "4": [0, 0, 0, 0, 0, 0, 1, 1, 0, 1]}
 def preprocess_image(bytes_array):
     """
     Из байетового массива собирает numpy массив
@@ -31,11 +36,20 @@ def predict_emotion(img):
     """
     Функция предсказывает вектор эмоций по изображению
     :param img: Numpy массив размером (48, 48)
-    :return: Вектор эмоций
+    :return: Номер эмоции, где 0 - страшный, 1 - счастливый, 2 - нейтральный, 3 - грустный, 4 - восторг
     """
-    model = tf.keras.models.load_model("models/img_to_emotion.h5")
-    return model.predict(np.expand_dims(np.expand_dims(img, -1), 0))
+    #model = load_model("models/img_to_emotion.h5")
+    #return model.predict(np.expand_dims(np.expand_dims(img, -1), 0))
 
-if __name__ == "__main__":
-    face = get_face(cv2.imread("/home/danil/Downloads/7a03a4f018363854eb6c2cf8a4ca7177.jpg"))
-    predict_emotion(face)
+def recognize(img):
+    """
+    Из байт массива преобразует в numpy array, находит лицо и пронозирует настроение
+    :param img: Байт массив
+    :return: Настроение
+    """
+
+    return predict_emotion(get_face(preprocess_image(img)))
+
+#if __name__ == "__main__":
+    #face = get_face(cv2.imread("/home/danil/Downloads/7a03a4f018363854eb6c2cf8a4ca7177.jpg")))
+    #predict_emotion(face)
