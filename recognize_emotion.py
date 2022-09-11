@@ -1,9 +1,10 @@
 import numpy as np
 import cv2
 
-from tensorflow.keras.models import load_model
+#from tensorflow.keras.models import load_model
 
 detector = cv2.CascadeClassifier("haarcascade/haarcascade_frontalface_alt2.xml")
+
 mood_vectors = {"0": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                 "1": [1, 1, 0, 0, 0, 1, 1, 0, 1, 0],
                 "2": [1, 0, 1, 1, 1, 0, 1, 1, 1, 1],
